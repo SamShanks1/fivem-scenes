@@ -21,18 +21,19 @@ Ensure fivem-scenes after ox_lib and oxmysql
 * View the changes being made before placing the scene
 * Scenes are saved to the databse
 * Scenes are automatically deleted when they expire
+* Delete your own scenes
 
 ## Example Usage
 ### Interface Examples
 ![Interface](https://i.gyazo.com/84f8f8b877ae1c403893ce8ec52ada0e.png)
 ### Video Example
-[![Video Example](https://i.gyazo.com/b1a47c5bcfcc831aea3478c255a94794.png)](https://streamable.com/5mqlra)
+[![Video Example](https://i.gyazo.com/b1a47c5bcfcc831aea3478c255a94794.png)](https://streamable.com/2lj8o9)
 
 
 # ToDo List
 * Help button on UI showing [Text Formatting](https://docs.fivem.net/docs/game-references/text-formatting)
-* Delete Scenes
 * Edit Scenes
+* Admin ability to delete other peoples scenes
 * Show Scene duration
 
 ## Credits
