@@ -43,10 +43,20 @@ RegisterNetEvent('fivem-scenes:client:addScene', function(data)
   scenes[#scenes+1] = data
 end)
 
-
 CreateThread(function()
     local data = lib.callback.await("fivem-scenes:server:getScenes")
     scenes = data
+
+    if Config.Radial then
+      lib.addRadialItem({
+        id = 'scenes',
+        icon = 'palette',
+        label = 'Scene',
+        onSelect = function()
+          ToggleCreationLaser()
+        end
+      })
+    end
 end)
 
 CreateThread(function()
