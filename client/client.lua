@@ -32,7 +32,7 @@ RegisterNUICallback('UpdateScene', function(data, cb)
 end)
 
 RegisterCommand('scene', function()
-  ToggleCreationLaser()
+  ToggleSceneLaser()
 end, false)
 
 RegisterNetEvent('fivem-scenes:client:updateAllScenes', function(data)
@@ -41,6 +41,14 @@ end)
 
 RegisterNetEvent('fivem-scenes:client:addScene', function(data)
   scenes[#scenes+1] = data
+end)
+
+RegisterNetEvent('fivem-scenes:client:removeScene', function(sceneId)
+  for i = 1, #scenes do 
+      if scenes[i].id == sceneId then
+        table.remove(scenes, i)
+      end
+  end
 end)
 
 CreateThread(function()
@@ -53,7 +61,7 @@ CreateThread(function()
         icon = 'palette',
         label = 'Scene',
         onSelect = function()
-          ToggleCreationLaser()
+          ToggleSceneLaser()
         end
       })
     end
@@ -87,15 +95,15 @@ CreateThread(function()
   end
 end)
 
-function ToggleCreationLaser()
+function ToggleSceneLaser()
   creationLaser = true
     if creationLaser then
         CreateThread(function()
             while creationLaser do
-              local hit, coords = DrawLaser('PRESS ~g~E~w~ TO CREATE SCENE', {r = 2, g = 241, b = 181, a = 200})
+              local hit, coords = DrawLaser('PRESS ~g~E~w~ TO CREATE SCENE\nPRESS ~g~G~w~ TO DELETE SCENE', {r = 2, g = 241, b = 181, a = 200})
             
-              sceneData.coords = coords
               if IsControlJustReleased(0, 38) then
+                  sceneData.coords = coords
                   if hit then
                     creationLaser = false
                     EditingScene()
@@ -103,11 +111,33 @@ function ToggleCreationLaser()
                   else
                       lib.notify({description = "Laser did not hit anything.", type = "error"})
                   end
+              elseif IsControlJustReleased(0, 47) then
+                  creationLaser = false
+                  DeleteScene(coords)
               end
               Wait(0)
             end
         end)
     end
+end
+
+function DeleteScene(coords)
+  local closestScene = nil
+  local shortestDistance = nil
+  for i=1,#scenes do
+      local currentScene = scenes[i]
+      local distance =  #(coords - currentScene.coords)
+      if distance < 1 and (shortestDistance == nil or distance < shortestDistance) then
+          closestScene = currentScene.id
+          shortestDistance = distance
+      end
+  end
+
+  if closestScene then
+     TriggerServerEvent('fivem-scenes:server:deleteScene', closestScene)
+  else
+    lib.notify({type = "error", description = "No scene was close enough"})
+  end
 end
 
 function EditingScene()
