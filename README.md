@@ -1,23 +1,30 @@
 # fivem-scenes
 A standalone scene creation script 
 
-## Release
+## Setup
 Make sure to download the latest release from the Releases section on the right and not the source code
 https://github.com/SamShanks1/fivem-scenes/releases/latest/download/fivem-scenes.zip
 
+Import scenes.sql into your database 
+
+Ensure fivem-scenes after ox_lib and oxmysql
+
 ## Dependencies
 - [ox_lib](https://github.com/overextended/ox_lib)
+- [oxmysql](https://github.com/overextended/oxmysql)
 
 ## Features
-* Create scene using a laser point with the command CreateScene
+* Manage scene using a laser point with the command 'scene'
 * Custom Background & Fonts (credits to dpscenes)
 * Change the text, colour, font size, shadow and outline
 * Change the background type, colour, height, width, position and opacity
 * View the changes being made before placing the scene
+* Scenes are saved to the databse
+* Scenes are automatically deleted when they expire
 
 ## Example Usage
 ### Interface Examples
-![Interface](https://i.gyazo.com/6d174db1baf1447e8c558a292d1bf1f2.png)
+![Interface](https://i.gyazo.com/84f8f8b877ae1c403893ce8ec52ada0e.png)
 ### Video Example
 [![Video Example](https://i.gyazo.com/b1a47c5bcfcc831aea3478c255a94794.png)](https://streamable.com/5mqlra)
 
@@ -26,7 +33,6 @@ https://github.com/SamShanks1/fivem-scenes/releases/latest/download/fivem-scenes
 * Help button on UI showing [Text Formatting](https://docs.fivem.net/docs/game-references/text-formatting)
 * Delete Scenes
 * Edit Scenes
-* Scene duration / save to database
 * Show Scene duration
 
 ## Credits

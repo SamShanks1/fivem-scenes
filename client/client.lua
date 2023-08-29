@@ -31,13 +31,18 @@ RegisterNUICallback('UpdateScene', function(data, cb)
   cb({})
 end)
 
-RegisterCommand('createScene', function()
+RegisterCommand('scene', function()
   ToggleCreationLaser()
 end, false)
 
-RegisterNetEvent('fivem-scenes:client:newScene', function(data)
+RegisterNetEvent('fivem-scenes:client:updateAllScenes', function(data)
+  scenes = data
+end)
+
+RegisterNetEvent('fivem-scenes:client:addScene', function(data)
   scenes[#scenes+1] = data
 end)
+
 
 CreateThread(function()
     local data = lib.callback.await("fivem-scenes:server:getScenes")

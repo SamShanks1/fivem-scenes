@@ -49,7 +49,7 @@ const useStyles = createStyles((theme) => ({
     top: "15px",
     right: "15px",
     width: 330,
-    height: 650,
+    height: 675,
     backgroundColor: theme.colors.dark[7],
     borderRadius: theme.radius.md,
     color: theme.colors.dark[1],
@@ -132,7 +132,7 @@ const App: React.FC = () => {
   const [backgroundAlpha, setBackgroundAlpha] = useState(128);
   const [backgroundX, setBackgroundX] = useState(0);
   const [backgroundY, setBackgroundY] = useState(0.034);
-  // const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(1);
   // const [showDuration, setShowDuration] = useState(false);
 
   const [fontOptions, setFontOptions] = useState<IFonts[]>([
@@ -163,7 +163,7 @@ const App: React.FC = () => {
       backgroundAlpha: backgroundAlpha,
       backgroundX: backgroundX,
       backgroundY: backgroundY,
-      // duration: duration,
+      duration: duration,
       // showDuration: showDuration,
     });
   }, [
@@ -325,7 +325,7 @@ const App: React.FC = () => {
 
 
           {/* DURATION */}
-          {/* <Group>
+          <Group>
             <Text fz="sm">Duration (Hours)</Text>
             <Slider
               sx={{ flexGrow: 1 }}
@@ -335,7 +335,7 @@ const App: React.FC = () => {
               value={duration}
               onChange={setDuration}
             />
-          </Group> */}
+          </Group>
 
           {/* SHOW SCENE DURATION */}
           {/* <Switch

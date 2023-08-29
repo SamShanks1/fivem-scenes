@@ -60,7 +60,7 @@ jobs:
       - name: Bundle files
         run: |
           mkdir -p ./temp/fivem-scenes
-          cp ./{LICENSE,README.md,fxmanifest.lua,config.lua} ./temp/fivem-scenes
+          cp ./{LICENSE,README.md,fxmanifest.lua,config.lua,scenes.sql} ./temp/fivem-scenes
           cp -r ./client ./temp/fivem-scenes
           cp -r ./server ./temp/fivem-scenes
           cp -r ./stream ./temp/fivem-scenes

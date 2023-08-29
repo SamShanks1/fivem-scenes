@@ -3,7 +3,7 @@ lua54 'yes'
 game 'gta5'
 
 author "Sam Shanks"
-version      '1.0.0'
+version '1.0.0'
 repository 'https://github.com/SamShanks1/fivem-scenes'
 description 'Fivem Scenes'
 
@@ -11,8 +11,8 @@ shared_scripts { '@ox_lib/init.lua', 'config.lua' }
 
 ui_page 'web/build/index.html'
 
-client_scripts {"client/client.lua", "client/fonts.lua", "client/utils.lua"}
-server_script "server/server.lua"
+client_scripts { "client/client.lua", "client/fonts.lua", "client/utils.lua" }
+server_scripts { "@oxmysql/lib/MySQL.lua", "server/server.lua" }
 
 files {
 	'web/build/index.html',
