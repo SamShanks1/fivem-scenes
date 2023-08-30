@@ -35,8 +35,9 @@ Ensure fivem-scenes after ox_lib and oxmysql
 # ToDo List
 * Help button on UI showing [Text Formatting](https://docs.fivem.net/docs/game-references/text-formatting)
 * Edit Scenes
-* Admin ability to delete other peoples scenes
+* Emoji selector
 * Show Scene duration
+* Word Filter
 
 ## Credits
 Credit to [ItsANoBrainer's qb-scenes](https://github.com/ItsANoBrainer/qb-scenes) for a lot of the functions, lua code and inspiration.
