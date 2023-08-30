@@ -88,6 +88,10 @@ RegisterNetEvent('fivem-scenes:server:deleteScene', function(sceneId)
         end
     end
 
+    if IsPlayerAceAllowed(src, Config.AceGroup) then
+        canDelete = true
+    end
+
     if not canDelete then
         return TriggerClientEvent('ox_lib:notify', src, {type = "error", description = "You did not create this scene"})
     end
@@ -98,6 +102,7 @@ RegisterNetEvent('fivem-scenes:server:deleteScene', function(sceneId)
         end
         table.remove(scenes, scenePos)
         TriggerClientEvent('fivem-scenes:client:removeScene', -1, sceneId)
+        TriggerClientEvent('ox_lib:notify', src, {type = "success", description = "Scene Deleted"})
     end)
 
 end)

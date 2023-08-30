@@ -22,7 +22,8 @@ Ensure fivem-scenes after ox_lib and oxmysql
 * View the changes being made before placing the scene
 * Scenes are saved to the database
 * Scenes are automatically deleted when they expire
-* Delete your own scenes
+* Delete your own scenes or admins can delete anyones
+* Admin only option
 
 ## Example Usage
 ### Interface Examples
