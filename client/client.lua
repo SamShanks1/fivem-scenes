@@ -31,6 +31,10 @@ RegisterNUICallback('UpdateScene', function(data, cb)
   cb({})
 end)
 
+RegisterNUICallback('getMaxViewDistance', function(_, cb)
+	cb(Config.MaxDistance)
+end)
+
 RegisterCommand('scene', function()
   ToggleSceneLaser()
 end, false)
@@ -74,7 +78,7 @@ CreateThread(function()
           local currentScene = scenes[i]
           local plyPosition = GetEntityCoords(PlayerPedId())
           local distance = #(plyPosition - currentScene.coords)
-          if distance < Config.MaxPlacementDistance then
+          if distance < Config.MaxDistance then
               closestScenes[#closestScenes+1] = currentScene
           end
       end
@@ -88,7 +92,12 @@ CreateThread(function()
       if #closestScenes > 0 then
           wait = 0
           for i=1, #closestScenes do
-              DrawScene(closestScenes[i])
+              local currentScene = closestScenes[i]
+              local plyPosition = GetEntityCoords(PlayerPedId())
+              local distance = #(plyPosition - currentScene.coords)
+              if distance <= currentScene.viewDistance then
+                  DrawScene(closestScenes[i])
+              end
           end
       end
       Wait(wait)
@@ -153,7 +162,7 @@ function EditingScene()
 end
 
 function DrawLaser(message, color)
-  local hit, coords = RayCastGamePlayCamera(Config.MaxPlacementDistance)
+  local hit, coords = RayCastGamePlayCamera(Config.MaxDistance)
   Draw2DText(message, 4, {255, 255, 255}, 0.4, 0.43, 0.888 + 0.025)
 
   if hit then

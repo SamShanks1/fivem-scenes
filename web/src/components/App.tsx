@@ -12,8 +12,10 @@ import {
   Button,
   Text,
   ColorInput,
+  Tooltip,
+  ActionIcon,
 } from "@mantine/core";
-import { TextSize } from "tabler-icons-react";
+import { TextSize, RulerMeasure } from "tabler-icons-react";
 import { fetchNui } from "../utils/fetchNui";
 
 interface IFonts {
@@ -49,7 +51,7 @@ const useStyles = createStyles((theme) => ({
     top: "15px",
     right: "15px",
     width: 330,
-    height: 675,
+    height: 710,
     backgroundColor: theme.colors.dark[7],
     borderRadius: theme.radius.md,
     color: theme.colors.dark[1],
@@ -133,6 +135,8 @@ const App: React.FC = () => {
   const [backgroundX, setBackgroundX] = useState(0);
   const [backgroundY, setBackgroundY] = useState(0.034);
   const [duration, setDuration] = useState(1);
+  const [viewDistance, setViewDistance] = useState(5);
+  const [maxViewDistance, setMaxViewDistance] = useState(25);
   // const [showDuration, setShowDuration] = useState(false);
 
   const [fontOptions, setFontOptions] = useState<IFonts[]>([
@@ -145,6 +149,10 @@ const App: React.FC = () => {
   useEffect(() => {
     fetchNui<IFonts[]>("getFonts").then((retData) => {
       setFontOptions(retData);
+    });
+
+    fetchNui<number>("getMaxViewDistance").then((retData) => {
+      setMaxViewDistance(retData);
     });
   });
 
@@ -164,6 +172,7 @@ const App: React.FC = () => {
       backgroundX: backgroundX,
       backgroundY: backgroundY,
       duration: duration,
+      viewDistance: viewDistance,
       // showDuration: showDuration,
     });
   }, [
@@ -210,7 +219,11 @@ const App: React.FC = () => {
 
           {/* FONT SIZE */}
           <Group>
-            <TextSize color={"white"} />
+            <Tooltip label="Font Size" color="blue" withArrow>
+              <ActionIcon>
+                <TextSize color={"white"} />
+              </ActionIcon>
+            </Tooltip>
             <Slider
               sx={{ flexGrow: 1 }}
               min={0.1}
@@ -218,6 +231,23 @@ const App: React.FC = () => {
               step={0.1}
               value={fontSize}
               onChange={setFontSize}
+            />
+          </Group>
+
+          {/* View Distance */}
+          <Group>
+            <Tooltip label="View Distance" color="blue" withArrow>
+              <ActionIcon>
+                <RulerMeasure color={"white"} />
+              </ActionIcon>
+            </Tooltip>
+            <Slider
+              sx={{ flexGrow: 1 }}
+              min={1}
+              max={maxViewDistance}
+              step={1}
+              value={viewDistance}
+              onChange={setViewDistance}
             />
           </Group>
 
@@ -322,7 +352,6 @@ const App: React.FC = () => {
               onChange={setBackgroundY}
             />
           </Group>
-
 
           {/* DURATION */}
           <Group>
