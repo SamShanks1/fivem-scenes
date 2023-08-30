@@ -124,7 +124,7 @@ const App: React.FC = () => {
   const [text, setText] = useState("");
   const [font, setFont] = useState<string | null>("0");
   const [colour, setColour] = useState("#ffffff");
-  const [fontSize, setFontSize] = useState(0.4);
+  const [fontSize, setFontSize] = useState(0.2);
   const [shadow, setShadow] = useState(false);
   const [outline, setOutline] = useState(false);
   const [background, setBackground] = useState<string | null>("none");
@@ -155,6 +155,24 @@ const App: React.FC = () => {
       setMaxViewDistance(retData);
     });
   });
+
+  const resetMenu = () => {
+    setText("");
+    setFont("0");
+    setColour("#ffffff");
+    setFontSize(0.2);
+    setShadow(false);
+    setOutline(false);
+    setBackground("none");
+    setBackgroundHeight(0.01);
+    setBackgroundWidth(0.01);
+    setBackgroundColour("#000000");
+    setBackgroundAlpha(128);
+    setBackgroundX(0);
+    setBackgroundY(0.034);
+    setDuration(1);
+    setViewDistance(5);
+  };
 
   useEffect(() => {
     fetchNui("UpdateScene", {
@@ -376,9 +394,16 @@ const App: React.FC = () => {
           />  */}
 
           <Group>
-            <Button color="green" onClick={() => fetchNui("CreateScene")}>
+            <Button
+              color="green"
+              onClick={() => {
+                fetchNui("CreateScene");
+                resetMenu();
+              }}
+            >
               Submit
             </Button>
+            <Button onClick={resetMenu}>Reset</Button>
             <Button color="red" onClick={() => fetchNui("hideFrame")}>
               Cancel
             </Button>
