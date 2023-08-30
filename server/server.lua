@@ -67,7 +67,7 @@ RegisterNetEvent('fivem-scenes:server:createScene', function(sceneData)
         identifier, json.encode(sceneData), sceneData.duration 
     }, function(id)
         sceneData.id = id
-        if Config.log then
+        if Config.Log then
             lib.logger(src, 'CreateScene', json.encode(sceneData))
         end
         scenes[#scenes+1] = sceneData
@@ -97,7 +97,7 @@ RegisterNetEvent('fivem-scenes:server:deleteScene', function(sceneId)
     end
 
     MySQL.Async.execute('DELETE FROM scenes WHERE id = ?', {sceneId}, function()
-        if Config.log then
+        if Config.Log then
             lib.logger(src, 'DeleteScene', scenes[scenePos])
         end
         table.remove(scenes, scenePos)
