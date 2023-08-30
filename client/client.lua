@@ -35,9 +35,9 @@ RegisterNUICallback('getMaxViewDistance', function(_, cb)
 	cb(Config.MaxDistance)
 end)
 
-RegisterCommand('scene', function()
+RegisterNetEvent('fivem-scenes:client:startScenes', function()
   ToggleSceneLaser()
-end, false)
+end)
 
 RegisterNetEvent('fivem-scenes:client:updateAllScenes', function(data)
   scenes = data
@@ -59,7 +59,7 @@ CreateThread(function()
     local data = lib.callback.await("fivem-scenes:server:getScenes")
     scenes = data
 
-    if Config.Radial then
+    if Config.Radial and not Config.AdminOnly then
       lib.addRadialItem({
         id = 'scenes',
         icon = 'palette',

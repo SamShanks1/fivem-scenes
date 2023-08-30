@@ -2,6 +2,15 @@ lib.versionCheck('SamShanks1/fivem-scenes')
 
 local scenes = {}
 
+local restrictedGroup = Config.AdminOnly and Config.AceGroup
+
+lib.addCommand('scene', {
+    help = 'Create/Delete a scene',
+    restricted = restrictedGroup
+}, function(source, args, raw)
+    TriggerClientEvent('fivem-scenes:client:startScenes', source)
+end)
+
 --Credit https://github.com/ItsANoBrainer/qb-scenes/blob/master/server/server.lua
 
 local function updateAllScenes()
