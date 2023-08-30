@@ -69,6 +69,17 @@ CreateThread(function()
         end
       })
     end
+
+    if Config.EnableKeybind then
+      lib.addKeybind({
+        name = "Scenes",
+        description = "Create/Delete scenes",
+        defaultKey = Config.KeybindKey,
+        onReleased = function(self)
+          ToggleSceneLaser()
+        end
+      })
+    end
 end)
 
 CreateThread(function()
