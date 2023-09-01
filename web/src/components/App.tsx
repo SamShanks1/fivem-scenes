@@ -33,6 +33,9 @@ interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
 interface IConfig {
   maxDuration: number;
   maxDistance: number;
+  isAdmin: boolean;
+  neverExpire: boolean;
+  neverExpireAdmin: boolean;
 }
 
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
@@ -143,6 +146,13 @@ const App: React.FC = () => {
   const [viewDistance, setViewDistance] = useState(5);
   const [maxViewDistance, setMaxViewDistance] = useState(25);
   const [maxDuration, setMaxDuration] =  useState(50);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [neverExpireOption, setNeverExpireOption] = useState(false);
+  const [neverExpireAdmin, setNeverExpireAdmin] = useState(true);
+  const [neverExpire, setNeverExpire] = useState(false);
+
+
+
   // const [showDuration, setShowDuration] = useState(false);
 
   const [fontOptions, setFontOptions] = useState<IFonts[]>([
@@ -160,6 +170,9 @@ const App: React.FC = () => {
     fetchNui<IConfig>("getMaxViewDistance").then((retData) => {
       setMaxViewDistance(retData.maxDistance);
       setMaxDuration(retData.maxDuration);
+      setIsAdmin(retData.isAdmin);
+      setNeverExpireOption(retData.neverExpire);
+      setNeverExpireAdmin(retData.neverExpireAdmin);
     });
   });
 
@@ -179,6 +192,7 @@ const App: React.FC = () => {
     setBackgroundY(0.034);
     setDuration(1);
     setViewDistance(5);
+    setNeverExpire(false);
   };
 
   useEffect(() => {
@@ -198,6 +212,7 @@ const App: React.FC = () => {
       backgroundY: backgroundY,
       duration: duration,
       viewDistance: viewDistance,
+      neverExpire: neverExpire
       // showDuration: showDuration,
     });
   }, [
@@ -214,6 +229,7 @@ const App: React.FC = () => {
     backgroundAlpha,
     backgroundX,
     backgroundY,
+    neverExpire
   ]);
 
   return (
@@ -390,6 +406,18 @@ const App: React.FC = () => {
               onChange={setDuration}
             />
           </Group>
+
+          {/* Never Expire */}
+          {neverExpireOption && (!neverExpireAdmin || isAdmin) && (
+
+          <Switch
+            label="Scene Never Expires"
+            checked={neverExpire}
+            onChange={(event) => {
+              setNeverExpire(event.currentTarget.checked);
+            }}
+          /> 
+          )}
 
           {/* SHOW SCENE DURATION */}
           {/* <Switch

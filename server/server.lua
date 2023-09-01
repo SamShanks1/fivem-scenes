@@ -29,12 +29,21 @@ local function updateAllScenes()
 end
 
 local function deleteExpiredScenes()
-    MySQL.Async.execute('DELETE FROM scenes WHERE deleteAt < NOW()', {}, function(result)
-        if result > 0 then
-            print('Deleted '..result..' expired scenes from the database.')
-            updateAllScenes()
-        end
-    end)
+    if Config.NeverExpire then
+        MySQL.Async.execute('DELETE FROM scenes WHERE deleteAt < NOW() AND `neverExpire` = 0', {}, function(result)
+            if result > 0 then
+                print('Deleted '..result..' expired scenes from the database.')
+                updateAllScenes()
+            end
+        end)
+    else
+        MySQL.Async.execute('DELETE FROM scenes WHERE deleteAt < NOW()', {}, function(result)
+            if result > 0 then
+                print('Deleted '..result..' expired scenes from the database.')
+                updateAllScenes()
+            end
+        end)
+    end
 end
 
 local function countScenes(identifier)
@@ -63,8 +72,8 @@ RegisterNetEvent('fivem-scenes:server:createScene', function(sceneData)
         return TriggerClientEvent('ox_lib:notify', src, {type = "error", description = "You have exceed the max scene count"})
     end
     sceneData.creator = identifier
-    MySQL.Async.insert('INSERT INTO scenes (creator, data, createdAt, deleteAt) VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? HOUR))', {
-        identifier, json.encode(sceneData), sceneData.duration 
+    MySQL.Async.insert('INSERT INTO scenes (creator, data, createdAt, deleteAt, neverExpire) VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? HOUR), ?)', {
+        identifier, json.encode(sceneData), sceneData.duration, sceneData.neverExpire
     }, function(id)
         sceneData.id = id
         if Config.Log then
@@ -109,6 +118,11 @@ end)
 
 lib.callback.register('fivem-scenes:server:getScenes', function()
     return scenes
+end)
+
+
+lib.callback.register('fivem-scenes:server:isAdmin', function(source)
+    return IsPlayerAceAllowed(source, Config.AceGroup)
 end)
 
 CreateThread(function()

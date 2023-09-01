@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS `scenes` (
   `data` longtext DEFAULT NULL,
   `createdAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL,
+  `neverExpire` TINYINT (1) DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;

@@ -32,9 +32,13 @@ RegisterNUICallback('UpdateScene', function(data, cb)
 end)
 
 RegisterNUICallback('getConfig', function(_, cb)
+  local admin = lib.callback.await("fivem-scenes:server:isAdmin")
   local retval = {
     maxDistance = Config.MaxDistance,
     maxDuration = Config.MaxDuration,
+    isAdmin = admin,
+    neverExpire = Config.NeverExpire,
+    neverExpireAdmin = Config.NeverExpireAdmin
   }
 	cb(retval)
 end)
