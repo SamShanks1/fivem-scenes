@@ -9,3 +9,4 @@ Config.AdminDeleteAll = true --admins can delete other peoples scenes
 Config.AceGroup = 'group.admin' --if AdminOnly or AdminDeleteAll is set to true the ace group the command will be locked too
 Config.EnableKeybind = false --allow scenes menu to be opened via keybind
 Config.KeybindKey = "K" --if EnableKeybind is set to true the key to use, if you change this it will only change for new players
+Config.MaxDuration = 50 --max duration the scene can be set in hours

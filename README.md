@@ -17,7 +17,7 @@ Ensure fivem-scenes after ox_lib and oxmysql
 * Manage scene using a laser point with the command 'scene'
 * Custom Background & Fonts (credits to dpscenes)
 * Change the text, colour, font size, shadow, outline and view distance
-* Config for max distance, logs and max scenes
+* Config for max distance, max duration, logs and max scenes
 * Change the background type, colour, height, width, position and opacity
 * View the changes being made before placing the scene
 * Scenes are saved to the database

@@ -30,6 +30,11 @@ interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
   description: string;
 }
 
+interface IConfig {
+  maxDuration: number;
+  maxDistance: number;
+}
+
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ image, label, description, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
@@ -137,6 +142,7 @@ const App: React.FC = () => {
   const [duration, setDuration] = useState(1);
   const [viewDistance, setViewDistance] = useState(5);
   const [maxViewDistance, setMaxViewDistance] = useState(25);
+  const [maxDuration, setMaxDuration] =  useState(50);
   // const [showDuration, setShowDuration] = useState(false);
 
   const [fontOptions, setFontOptions] = useState<IFonts[]>([
@@ -151,8 +157,9 @@ const App: React.FC = () => {
       setFontOptions(retData);
     });
 
-    fetchNui<number>("getMaxViewDistance").then((retData) => {
-      setMaxViewDistance(retData);
+    fetchNui<IConfig>("getMaxViewDistance").then((retData) => {
+      setMaxViewDistance(retData.maxDistance);
+      setMaxDuration(retData.maxDuration);
     });
   });
 
@@ -378,7 +385,7 @@ const App: React.FC = () => {
               sx={{ flexGrow: 1 }}
               step={1}
               min={1}
-              max={50}
+              max={maxDuration}
               value={duration}
               onChange={setDuration}
             />

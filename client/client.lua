@@ -31,8 +31,12 @@ RegisterNUICallback('UpdateScene', function(data, cb)
   cb({})
 end)
 
-RegisterNUICallback('getMaxViewDistance', function(_, cb)
-	cb(Config.MaxDistance)
+RegisterNUICallback('getConfig', function(_, cb)
+  local retval = {
+    maxDistance = Config.MaxDistance,
+    maxDuration = Config.MaxDuration,
+  }
+	cb(retval)
 end)
 
 RegisterNetEvent('fivem-scenes:client:startScenes', function()
