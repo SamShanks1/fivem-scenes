@@ -164,7 +164,7 @@ const App: React.FC = () => {
       setFontOptions(retData);
     });
 
-    fetchNui<IConfig>("getMaxViewDistance").then((retData) => {
+    fetchNui<IConfig>("getConfig").then((retData) => {
       setMaxViewDistance(retData.maxDistance);
       setMaxDuration(retData.maxDuration);
       setIsAdmin(retData.isAdmin);
