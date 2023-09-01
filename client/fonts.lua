@@ -34,8 +34,3 @@ for i = 1, #AddonFonts do
 	local Id = RegisterFontId(AddonFonts[i][2])
 	Fonts[#Fonts+1] = {label = AddonFonts[i][2], value = tostring(Id), group = AddonFonts[i][3]}
 end
-
-
-RegisterNUICallback('getFonts', function(_, cb)
-	cb(Fonts)
-end)

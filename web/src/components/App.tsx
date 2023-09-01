@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 import { TextSize, RulerMeasure } from "tabler-icons-react";
 import { fetchNui } from "../utils/fetchNui";
+import { useNuiEvent } from "../hooks/useNuiEvent";
 
 interface IFonts {
   label: string;
@@ -159,19 +160,18 @@ const App: React.FC = () => {
     { label: "Pricedown", value: "7", group: "Misc" },
   ]);
 
-  useEffect(() => {
-    fetchNui<IFonts[]>("getFonts").then((retData) => {
-      setFontOptions(retData);
-    });
+  useNuiEvent<IConfig>('setConfig', (data) => {
+    setMaxViewDistance(data.maxDistance);
+    setMaxDuration(data.maxDuration);
+    setIsAdmin(data.isAdmin);
+    setNeverExpireOption(data.neverExpire);
+    setNeverExpireAdmin(data.neverExpireAdmin);
+  })
 
-    fetchNui<IConfig>("getConfig").then((retData) => {
-      setMaxViewDistance(retData.maxDistance);
-      setMaxDuration(retData.maxDuration);
-      setIsAdmin(retData.isAdmin);
-      setNeverExpireOption(retData.neverExpire);
-      setNeverExpireAdmin(retData.neverExpireAdmin);
-    });
-  });
+  useNuiEvent<IFonts[]>("setFonts", (data) => {
+    console.log(data)
+    setFontOptions(data);
+  })
 
   const resetMenu = () => {
     setText("");

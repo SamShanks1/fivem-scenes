@@ -25,22 +25,23 @@ RegisterNUICallback('CreateScene', function(data, cb)
   cb({})
 end)
 
-RegisterNUICallback('UpdateScene', function(data, cb)
-  data.coords = sceneData.coords
-  sceneData = data
-  cb({})
-end)
-
-RegisterNUICallback('getConfig', function(_, cb)
+CreateThread(function()
   local admin = lib.callback.await("fivem-scenes:server:isAdmin")
-  local retval = {
+  local data = {
     maxDistance = Config.MaxDistance,
     maxDuration = Config.MaxDuration,
     isAdmin = admin,
     neverExpire = Config.NeverExpire,
     neverExpireAdmin = Config.NeverExpireAdmin
   }
-	cb(retval)
+  SendReactMessage('setConfig', data)
+  SendReactMessage('setFonts', Fonts)
+end)
+
+RegisterNUICallback('UpdateScene', function(data, cb)
+  data.coords = sceneData.coords
+  sceneData = data
+  cb({})
 end)
 
 RegisterNetEvent('fivem-scenes:client:startScenes', function()
