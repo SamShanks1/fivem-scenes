@@ -2,7 +2,8 @@ lib.versionCheck('SamShanks1/fivem-scenes')
 
 local scenes = {}
 
-local restrictedGroup = Config.AdminOnly and Config.AceGroup
+local group = ('group.%s'):format(Config.AceGroup)
+local restrictedGroup = Config.AdminOnly and group
 
 lib.addCommand('scene', {
     help = 'Create/Delete a scene',
