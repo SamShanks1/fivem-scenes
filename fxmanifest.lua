@@ -3,7 +3,7 @@ lua54 'yes'
 game 'gta5'
 
 author "Sam Shanks"
-version      '1.3.0'
+version      '1.4.0'
 repository 'https://github.com/SamShanks1/fivem-scenes'
 description 'Fivem Scenes'
 
