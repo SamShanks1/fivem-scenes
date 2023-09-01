@@ -59,7 +59,6 @@ const useStyles = createStyles((theme) => ({
     top: "15px",
     right: "15px",
     width: 330,
-    height: 710,
     backgroundColor: theme.colors.dark[7],
     borderRadius: theme.radius.md,
     color: theme.colors.dark[1],
@@ -150,8 +149,6 @@ const App: React.FC = () => {
   const [neverExpireOption, setNeverExpireOption] = useState(false);
   const [neverExpireAdmin, setNeverExpireAdmin] = useState(true);
   const [neverExpire, setNeverExpire] = useState(false);
-
-
 
   // const [showDuration, setShowDuration] = useState(false);
 
@@ -428,7 +425,7 @@ const App: React.FC = () => {
             }}
           />  */}
 
-          <Group>
+          <Group sx={{paddingBottom: 15}}>
             <Button
               color="green"
               onClick={() => {
