@@ -37,8 +37,14 @@ function RayCastGamePlayCamera(distance)
 		y = cameraCoord.y + direction.y * distance,
 		z = cameraCoord.z + direction.z * distance
 	}
-	local _, hit, endCoords, _, _ = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1, PlayerPedId(), 0))
+	local _, hit, endCoords, _, _ = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1, cache.ped, 0))
 	return hit == 1, endCoords
+end
+
+function CanPlayerSeeScene(sceneCoords)
+    local coords = GetEntityCoords(cache.ped)
+	local _, hit, _, _, _ = GetShapeTestResult(StartShapeTestRay(coords.x, coords.y, coords.z, sceneCoords.x, sceneCoords.y, sceneCoords.z, -1, cache.ped, 0))
+	return hit == 1
 end
 
 function rgbToHex(hex)

@@ -96,7 +96,7 @@ CreateThread(function()
       closestScenes = {}
       for i=1, #scenes do
           local currentScene = scenes[i]
-          local plyPosition = GetEntityCoords(PlayerPedId())
+          local plyPosition = GetEntityCoords(cache.ped)
           local distance = #(plyPosition - currentScene.coords)
           if distance < Config.MaxDistance then
               closestScenes[#closestScenes+1] = currentScene
@@ -113,7 +113,7 @@ CreateThread(function()
           wait = 0
           for i=1, #closestScenes do
               local currentScene = closestScenes[i]
-              local plyPosition = GetEntityCoords(PlayerPedId())
+              local plyPosition = GetEntityCoords(cache.ped)
               local distance = #(plyPosition - currentScene.coords)
               if distance <= currentScene.viewDistance then
                   DrawScene(closestScenes[i])
@@ -186,7 +186,7 @@ function DrawLaser(message, color)
   Draw2DText(message, 4, {255, 255, 255}, 0.4, 0.43, 0.888 + 0.025)
 
   if hit then
-      local position = GetEntityCoords(PlayerPedId())
+      local position = GetEntityCoords(cache.ped)
       DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)
       DrawMarker(28, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.1, 0.1, 0.1, color.r, color.g, color.b, color.a, false, true, 2, nil, nil, false)
   end
@@ -195,36 +195,48 @@ function DrawLaser(message, color)
 end
 
 function DrawScene(currentScene)
+  local hit = false
+  if Config.CheckForCollisions then
+    hit = CanPlayerSeeScene(currentScene.coords)
+  end
   local onScreen, screenX, screenY = GetScreenCoordFromWorldCoord(currentScene.coords.x, currentScene.coords.y, currentScene.coords.z)
-  if onScreen then
+
+  if onScreen and not hit then
       local camCoords = GetFinalRenderedCamCoord()
       local distance = #(currentScene.coords - camCoords)
       local fov = (1 / GetGameplayCamFov()) * 75
       local scale = (1 / distance) * (4) * fov * (currentScene.fontSize or 1)
       local r,g,b=rgbToHex(currentScene.colour or "#ffffff")
       local text = currentScene.text
+
       SetTextScale(0.0, scale)
       SetTextFont(currentScene.font or 0)
       SetTextColour(r, g, b, 255)
       SetTextProportional(true)
       SetTextWrap(0.0, 1.0)
       SetTextCentre(true)
+
       if currentScene.shadow then
         SetTextDropshadow(1, 255, 255, 255, 0)
       end
+
       if currentScene.outline then
         SetTextOutline()
       end
+
       BeginTextCommandGetWidth("STRING")
       AddTextComponentString(text ~= "" and text or "Example Text")
+
       local H = GetRenderedCharacterHeight(scale, currentScene.font)+0.0030
       local W = EndTextCommandGetWidth(currentScene.font)+0.005
+
       BeginTextCommandDisplayText("STRING")
       AddTextComponentString(text ~= "" and text or "Example Text")
       EndTextCommandDisplayText(screenX, screenY)
 
       if currentScene.background and currentScene.background ~= "none" then
         local br, bg, bb = rgbToHex(currentScene.backgroundColour)
+
         DrawSprite("scenes", currentScene.background, screenX+currentScene.backgroundX*scale, screenY+currentScene.backgroundY*scale, W+currentScene.backgroundWidth*scale, H+currentScene.backgroundHeight*scale, 0, br,bg,bb, currentScene.backgroundAlpha)
       end
   end
