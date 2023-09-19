@@ -169,7 +169,6 @@ const App: React.FC = () => {
   })
 
   useNuiEvent<IFonts[]>("setFonts", (data) => {
-    console.log(data)
     setFontOptions(data);
   })
 
