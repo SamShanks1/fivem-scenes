@@ -195,7 +195,10 @@ function DrawLaser(message, color)
 end
 
 function DrawScene(currentScene)
-  local hit = CanPlayerSeeScene(currentScene.coords)
+  local hit = false
+  if Config.CheckForCollisions then
+    hit = CanPlayerSeeScene(currentScene.coords)
+  end
   local onScreen, screenX, screenY = GetScreenCoordFromWorldCoord(currentScene.coords.x, currentScene.coords.y, currentScene.coords.z)
 
   if onScreen and not hit then
