@@ -130,6 +130,6 @@ CreateThread(function()
     updateAllScenes()
 end)
 
-lib.cron.new('* */' .. Config.AuditInterval .. ' * * *', function()
+lib.cron.new('* */' .. Config.AuditInterval .. ' * * *', function() ---Hour--
     deleteExpiredScenes()
 end)
