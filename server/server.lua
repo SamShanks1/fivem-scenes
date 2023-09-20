@@ -128,8 +128,8 @@ end)
 
 CreateThread(function()
     updateAllScenes()
-    while true do
-        deleteExpiredScenes()
-        Wait(Config.AuditInterval)
-    end
+end)
+
+lib.cron.new('* */' .. Config.AuditInterval .. ' * * *', function()
+    deleteExpiredScenes()
 end)
