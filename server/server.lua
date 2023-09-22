@@ -130,6 +130,6 @@ CreateThread(function()
     updateAllScenes()
     while true do
         deleteExpiredScenes()
-        Wait(Config.AuditInterval)
+        Wait(Config.AuditInterval * 1000 * 60)
     end
 end)

@@ -13,3 +13,4 @@ Config.MaxDuration = 50 --max duration the scene can be set in hours
 Config.NeverExpire = false --set this to true for an option that scenes never expire in the UI and they will not be deleted from db
 Config.NeverExpireAdmin = true --if set to true then you have to be an admin to see the NeverExpire option if true
 Config.CheckForCollisions = false --enable this to check for collisions
+Config.AuditInterval = 15 --How many minutes to wait to query the databse to check for expired scenes
