@@ -44,20 +44,49 @@ RegisterNUICallback('UpdateScene', function(data, cb)
   cb({})
 end)
 
+local function buildScenePoint(scene)
+  local point = lib.points.new({
+    coords = scene.coords,
+    distance = Config.MaxDistance,
+    sceneId = scene.id
+  })
+  function point:nearby()
+    DrawScene(scene)
+  end
+end
+
+local function rebuildScenePoints()
+  local points = lib.points.getAllPoints()
+  for i = 1, #points do
+    points[i]:remove()
+  end
+  for i = 1, #scenes do
+    buildScenePoint(scenes[i])
+  end
+end
+
 RegisterNetEvent('fivem-scenes:client:startScenes', function()
   ToggleSceneLaser()
 end)
 
 RegisterNetEvent('fivem-scenes:client:updateAllScenes', function(data)
   scenes = data
+  rebuildScenePoints()
 end)
 
 RegisterNetEvent('fivem-scenes:client:addScene', function(data)
   scenes[#scenes+1] = data
+  buildScenePoint(data)
 end)
 
 RegisterNetEvent('fivem-scenes:client:removeScene', function(sceneId)
-  for i = 1, #scenes do 
+  local points = lib.points.getAllPoints()
+  for i = 1, #points do
+    if points[i].sceneId == sceneId then
+      points[i]:remove()
+    end
+  end
+  for i = 1, #scenes do
       if scenes[i].id == sceneId then
         table.remove(scenes, i)
       end
@@ -89,39 +118,7 @@ CreateThread(function()
         end
       })
     end
-end)
-
-CreateThread(function()
-  while true do
-      closestScenes = {}
-      for i=1, #scenes do
-          local currentScene = scenes[i]
-          local plyPosition = GetEntityCoords(cache.ped)
-          local distance = #(plyPosition - currentScene.coords)
-          if distance < Config.MaxDistance then
-              closestScenes[#closestScenes+1] = currentScene
-          end
-      end
-      Wait(1000)
-  end
-end)
-
-CreateThread(function()
-  while true do
-      local wait = 1000
-      if #closestScenes > 0 then
-          wait = 0
-          for i=1, #closestScenes do
-              local currentScene = closestScenes[i]
-              local plyPosition = GetEntityCoords(cache.ped)
-              local distance = #(plyPosition - currentScene.coords)
-              if distance <= currentScene.viewDistance then
-                  DrawScene(closestScenes[i])
-              end
-          end
-      end
-      Wait(wait)
-  end
+    rebuildScenePoints()
 end)
 
 function ToggleSceneLaser()
